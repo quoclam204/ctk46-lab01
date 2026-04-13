@@ -1,1 +1,1 @@
-"console.log('Xin ch�o');" 
+console.log("Họ tên: Lâm Quốc");
