@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
+
 export const metadata: Metadata = {
-  title: "CTK46 - Lab 01",
-  description: "Bài thực hành 1 - Các công nghệ mới trong PTPM",
+  title: "Nguyễn Lê Quốc Lâm - Trang cá nhân",
+  description: "Sinh viên CTK46B, định hướng trở thành Backend Developer",
+  keywords: ["Quốc Lâm", "Backend Developer", "CTK46B", "Next.js"],
+  authors: [{ name: "Nguyễn Lê Quốc Lâm" }],
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -11,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body>{children}</body>
+      <body className="bg-gray-100 text-gray-900">{children}</body>
     </html>
   );
 }
