@@ -1,1 +1,1 @@
-"console.log('Xin ch…o t? CTK46!');" 
+"console.log('Xin ch…o');" 
