@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Navbar from "@/src/components/navbar";
+import Footer from "@/src/components/footer";
 
 export const metadata: Metadata = {
   title: "Nguyễn Lê Quốc Lâm - Trang cá nhân",
@@ -15,7 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className="bg-gray-100 text-gray-900">{children}</body>
+      <body className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
