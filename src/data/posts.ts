@@ -5,9 +5,22 @@ export interface Post {
   content: string;
   date: string;
   category: string;
+  author: string;
 }
 
 export const posts: Post[] = [
+  {
+    slug: "a/b/c",
+    title: "Catch-all demo: a/b/c",
+    excerpt: "Bai viet mau de quan sat route catch-all.",
+    content: `Bai viet mau de quan sat catch-all route.
+
+Khi truy cap /blog/a/b/c, slug se duoc gop thanh "a/b/c" va lay noi dung nay.
+Day la vi du ngan de minh hoa su khac biet voi route [slug].`,
+    date: "2026-04-18",
+    category: "Demo",
+    author: "Nguyen Le Quoc Lam",
+  },
   {
     slug: "gioi-thieu-nextjs",
     title: "Giới thiệu Next.JS — Framework React phổ biến nhất",
@@ -25,7 +38,9 @@ Một số ưu điểm nổi bật của Next.JS:
 - Hỗ trợ TypeScript sẵn có`,
     date: "2025-01-15",
     category: "Công nghệ",
+    author: "Nguyễn Lê Quốc Lâm",
   },
+
   {
     slug: "hoc-tailwind-css",
     title: "Tailwind CSS — Cách tiếp cận mới cho CSS",
@@ -46,7 +61,9 @@ Bạn viết trực tiếp trong HTML:
 - File CSS cuối cùng rất nhỏ (chỉ chứa class đã dùng)`,
     date: "2025-01-20",
     category: "Công nghệ",
+    author: "Nguyễn Lê Quốc Lâm",
   },
+
   {
     slug: "kinh-nghiem-hoc-lap-trinh",
     title: "Chia sẻ kinh nghiệm tự học lập trình hiệu quả",
@@ -64,6 +81,51 @@ Hãy bắt đầu từ những dự án nhỏ và tăng dần độ phức tạp
 Tham gia các cộng đồng lập trình để học hỏi và chia sẻ kinh nghiệm.`,
     date: "2025-02-01",
     category: "Học tập",
+    author: "Nguyễn Lê Quốc Lâm",
+  },
+
+  {
+    slug: "hoc-git-co-ban",
+    title: "Git cơ bản cho người mới bắt đầu",
+    excerpt: "Hướng dẫn sử dụng Git từ cơ bản đến nâng cao cho sinh viên IT.",
+    content: `Git là một hệ thống quản lý phiên bản phân tán (Distributed Version Control System).
+
+Một số lệnh cơ bản:
+- git init: khởi tạo repository
+- git add .: thêm tất cả file vào staging
+- git commit -m "message": lưu thay đổi
+- git push: đẩy code lên GitHub
+
+Lợi ích của Git:
+- Quản lý lịch sử code
+- Làm việc nhóm hiệu quả
+- Dễ dàng rollback khi có lỗi`,
+    date: "2025-02-10",
+    category: "Công nghệ",
+    author: "Nguyễn Lê Quốc Lâm",
+  },
+
+  {
+    slug: "html-css-co-ban",
+    title: "HTML & CSS — Nền tảng của Web",
+    excerpt: "Tìm hiểu các kiến thức cơ bản nhất để bắt đầu làm web.",
+    content: `HTML và CSS là nền tảng của mọi website.
+
+HTML (HyperText Markup Language):
+- Dùng để xây dựng cấu trúc trang web
+- Bao gồm các thẻ như: div, p, h1, img,...
+
+CSS (Cascading Style Sheets):
+- Dùng để tạo giao diện
+- Bao gồm màu sắc, layout, animation
+
+Để học tốt:
+- Học HTML trước
+- Sau đó học CSS Flexbox và Grid
+- Thực hành làm các trang web nhỏ`,
+    date: "2025-02-15",
+    category: "Học tập",
+    author: "Nguyễn Lê Quốc Lâm",
   },
 ];
 
