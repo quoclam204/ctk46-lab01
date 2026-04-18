@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Counter from "@/src/components/counter";
+import CopyButton from "@/src/components/copy-button";
 
 export default function HomePage() {
   return (
@@ -89,6 +90,11 @@ export default function HomePage() {
         >
           Xem blog →
         </Link>
+      </div>
+
+      <div className="mt-8 flex flex-col items-center gap-3">
+        <p className="text-sm text-gray-500">Copy email liên hệ</p>
+        <CopyButton text="nguyenlequoc@gmail.com" />
       </div>
 
       <div className="mt-12 flex justify-center">
