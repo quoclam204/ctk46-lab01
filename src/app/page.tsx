@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Counter from "@/src/components/counter";
 
 export default function HomePage() {
   return (
@@ -88,6 +89,10 @@ export default function HomePage() {
         >
           Xem blog →
         </Link>
+      </div>
+
+      <div className="mt-12 flex justify-center">
+        <Counter />
       </div>
     </div>
   );
