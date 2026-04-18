@@ -4,6 +4,7 @@ export interface Project {
   description: string;
   content: string;
   tech: string[];
+  status: "Hoàn thành" | "Đang thực hiện";
 }
 
 export const projects: Project[] = [
@@ -23,6 +24,7 @@ Công nghệ sử dụng:
 - Tailwind CSS
 - TypeScript`,
     tech: ["Next.js", "Tailwind CSS", "TypeScript"],
+    status: "Hoàn thành",
   },
   {
     id: "todo-app",
@@ -38,5 +40,6 @@ Công nghệ:
 - React
 - JavaScript`,
     tech: ["React", "JavaScript"],
+    status: "Đang thực hiện",
   },
 ];

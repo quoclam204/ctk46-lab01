@@ -1,57 +1,94 @@
-import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
-      <div className="bg-white shadow-xl rounded-2xl p-8 max-w-xl w-full text-center">
-        {/* Avatar (có thể thêm sau) */}
-        <div className="mb-4">
-          <div className="w-20 h-20 mx-auto rounded-full bg-blue-500 flex items-center justify-center text-white text-2xl font-bold">
-            L
-          </div>
+    <div className="max-w-5xl mx-auto px-4 py-16">
+      {/* HERO SECTION */}
+      <div className="text-center mb-16">
+        {/* Avatar */}
+        <div className="w-24 h-24 bg-blue-100 rounded-full mx-auto mb-6 flex items-center justify-center">
+          <span className="text-4xl font-bold text-blue-600">LQ</span>
         </div>
 
         {/* Title */}
-        <h1 className="text-3xl font-bold mb-2">Xin chào! 👋</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          Xin chào! Tôi là <span className="text-blue-600">Lâm Quốc</span>
+        </h1>
 
-        <p className="text-gray-500 mb-6">
-          Đây là trang giới thiệu cá nhân của tôi
+        {/* Description */}
+        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          Sinh viên Công nghệ Thông tin tại Đại học Đà Lạt. Định hướng phát
+          triển Fullstack Web Developer, yêu thích Next.js, React và các công
+          nghệ web hiện đại.
         </p>
 
-        {/* Info */}
-        <div className="text-left space-y-2 mb-6">
-          <p>
-            <strong>👤 Họ và tên:</strong> Nguyễn Lê Quốc Lâm
-          </p>
-          <p>
-            <strong>🏫 Lớp:</strong> CTK46B
-          </p>
-          <p>
-            <strong>🆔 MSSV:</strong> 2212399
-          </p>
-          <p>
-            <strong>📘 Môn học:</strong> Các công nghệ mới trong PTPM
-          </p>
-        </div>
+        {/* Buttons */}
+        <div className="flex justify-center gap-4 flex-wrap">
+          <Link
+            href="/projects"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg
+                       hover:bg-blue-700 transition-colors"
+          >
+            Xem dự án
+          </Link>
 
-        {/* Sở thích + mục tiêu */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
-            <h2 className="font-semibold mb-2">🎯 Sở thích</h2>
-            <p className="text-sm text-gray-600">Ngủ 😴</p>
-          </div>
-
-          <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
-            <h2 className="font-semibold mb-2">🚀 Mục tiêu</h2>
-            <p className="text-sm text-gray-600">Trở thành Backend Developer</p>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="bg-blue-100 text-blue-800 p-3 rounded-lg">
-          🚀 Đây là project Next.js đầu tiên của tôi!
+          <Link
+            href="/contact"
+            className="border border-gray-300 px-6 py-3 rounded-lg
+                       hover:bg-gray-100 transition-colors"
+          >
+            Liên hệ
+          </Link>
         </div>
       </div>
-    </main>
+
+      {/* SKILLS SECTION */}
+      <div className="mb-16">
+        <h2 className="text-2xl font-bold text-center mb-8">Kỹ năng</h2>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            "C",
+            "C#",
+            "Java",
+            "JavaScript",
+            "Python",
+            ".NET",
+            "Node.js",
+            "React",
+            "Express",
+            "HTML5",
+            "CSS3",
+            "MySQL",
+            "MongoDB",
+          ].map((skill) => (
+            <div
+              key={skill}
+              className="bg-gray-50 rounded-lg p-4 text-center font-medium shadow-sm
+                         hover:bg-blue-50 hover:text-blue-600 hover:shadow-md
+                         transition-all cursor-pointer"
+            >
+              {skill}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* CTA SECTION */}
+      <div className="bg-blue-50 rounded-2xl p-8 text-center">
+        <h2 className="text-2xl font-bold mb-3">Blog cá nhân</h2>
+
+        <p className="text-gray-600 mb-4">
+          Chia sẻ kiến thức về lập trình web, Next.js và kinh nghiệm học IT
+        </p>
+
+        <Link
+          href="/blog"
+          className="text-blue-600 font-semibold hover:underline"
+        >
+          Xem blog →
+        </Link>
+      </div>
+    </div>
   );
 }
