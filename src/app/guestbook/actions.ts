@@ -26,8 +26,8 @@ export async function createGuestbookEntry(
 ): Promise<ActionState> {
   // Lấy dữ liệu từ form
   const rawData = {
-    name: formData.get("name") as string,
-    message: formData.get("message") as string,
+    name: String(formData.get("name") ?? "").trim(),
+    message: String(formData.get("message") ?? "").trim(),
   };
   // Validate bằng Zod
   const result = guestbookSchema.safeParse(rawData);
@@ -35,6 +35,26 @@ export async function createGuestbookEntry(
     return {
       success: false,
       errors: result.error.flatten().fieldErrors,
+    };
+  }
+  const now = Date.now();
+  const isDuplicate = guestbookEntries.some((entry) => {
+    if (
+      entry.name !== result.data.name ||
+      entry.message !== result.data.message
+    ) {
+      return false;
+    }
+    const createdAt = Date.parse(entry.createdAt);
+    return !Number.isNaN(createdAt) && now - createdAt < 60 * 1000;
+  });
+
+  if (isDuplicate) {
+    return {
+      success: false,
+      errors: {
+        message: ["Vui lòng không gửi trùng lặp trong vòng 1 phút"],
+      },
     };
   }
   // Thêm entry mới vào mảng

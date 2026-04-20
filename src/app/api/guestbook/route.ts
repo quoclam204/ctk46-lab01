@@ -47,6 +47,21 @@ export async function POST(request: NextRequest) {
       { status: 400 },
     );
   }
+  const now = Date.now();
+  const isDuplicate = guestbookEntries.some((entry) => {
+    if (entry.name !== name || entry.message !== message) {
+      return false;
+    }
+    const createdAt = Date.parse(entry.createdAt);
+    return !isNaN(createdAt) && now - createdAt < 60 * 1000;
+  });
+
+  if (isDuplicate) {
+    return NextResponse.json(
+      { error: "Vui lòng không gửi trùng lặp trong vòng 1 phút" },
+      { status: 400 },
+    );
+  }
   // Tạo entry mới
   const newEntry = {
     id: Date.now().toString(),
