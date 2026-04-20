@@ -4,8 +4,9 @@ import Navbar from "@/src/components/navbar";
 import Footer from "@/src/components/footer";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Nguyễn Lê Quốc Lâm - Trang cá nhân",
@@ -22,11 +23,13 @@ export default function RootLayout({
   return (
     <html lang="vi" className={cn("font-sans", geist.variable)}>
       <body className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-1">
-          <div className="max-w-5xl mx-auto px-4 py-8">{children}</div>
-        </main>
-        <Footer />
+        <TooltipProvider>
+          <Navbar />
+          <main className="flex-1">
+            <div className="max-w-5xl mx-auto px-4 py-8">{children}</div>
+          </main>
+          <Footer />
+        </TooltipProvider>
       </body>
     </html>
   );

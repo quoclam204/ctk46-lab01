@@ -1,6 +1,18 @@
 import Link from "next/link";
 import Counter from "@/src/components/counter";
 import CopyButton from "@/src/components/copy-button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function HomePage() {
   return (
@@ -76,6 +88,40 @@ export default function HomePage() {
         </div>
       </div>
 
+      <Alert className="mb-16">
+        <AlertTitle>Đang mở nhận dự án nhỏ</AlertTitle>
+        <AlertDescription>
+          Nếu bạn cần hỗ trợ một landing page hoặc chỉnh sửa UI, hãy gửi lời
+          nhắn. Tôi sẽ phản hồi sớm.
+        </AlertDescription>
+      </Alert>
+
+      <div className="mb-16">
+        <h2 className="text-2xl font-bold text-center mb-6">Câu hỏi nhanh</h2>
+        <Accordion type="single" collapsible className="max-w-2xl mx-auto">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Bạn đang học gì?</AccordionTrigger>
+            <AccordionContent>
+              Mình tập trung vào Next.js, React và xây dựng API bằng Node.js.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger>Mục tiêu hiện tại là gì?</AccordionTrigger>
+            <AccordionContent>
+              Hoàn thiện portfolio và tham gia các dự án thực tế để nâng kỹ
+              năng.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger>Liên hệ nhanh thế nào?</AccordionTrigger>
+            <AccordionContent>
+              Bạn có thể dùng form Contact hoặc bấm nút copy email ngay bên
+              dưới.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </div>
+
       {/* CTA SECTION */}
       <div className="bg-blue-50 rounded-2xl p-8 text-center">
         <h2 className="text-2xl font-bold mb-3">Blog cá nhân</h2>
@@ -94,7 +140,12 @@ export default function HomePage() {
 
       <div className="mt-8 flex flex-col items-center gap-3">
         <p className="text-sm text-gray-500">Copy email liên hệ</p>
-        <CopyButton text="nguyenlequoc@gmail.com" />
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <CopyButton text="nguyenlequoc@gmail.com" />
+          </TooltipTrigger>
+          <TooltipContent>Nhấn để sao chép email</TooltipContent>
+        </Tooltip>
       </div>
 
       <div className="mt-12 flex justify-center">
