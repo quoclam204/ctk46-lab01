@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Post, User } from "@/src/types/post";
+import { Comment, Post, User } from "@/src/types/post";
 
 interface BlogPostPageProps {
   params: Promise<{ id: string }>;
@@ -21,10 +21,23 @@ async function getUser(userId: number): Promise<User> {
   }
   return res.json();
 }
+
+async function getComments(postId: string): Promise<Comment[]> {
+  const res = await fetch(
+    `https://jsonplaceholder.typicode.com/posts/${postId}/comments`,
+  );
+  if (!res.ok) {
+    throw new Error("Không thể tải bình luận");
+  }
+  return res.json();
+}
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { id } = await params;
   const post = await getPost(id);
-  const author = await getUser(post.userId);
+  const [author, comments] = await Promise.all([
+    getUser(post.userId),
+    getComments(id),
+  ]);
   return (
     <div>
       <Link
@@ -55,6 +68,31 @@ leading-relaxed"
             {author.company.name}
           </p>
           <p className="text-gray-500 text-sm">{author.company.catchPhrase}</p>
+        </div>
+        <div className="border-t pt-6 mt-6">
+          <h3 className="font-semibold mb-4">Bình luận</h3>
+          {comments.length === 0 ? (
+            <p className="text-sm text-gray-500">Chưa có bình luận nào.</p>
+          ) : (
+            <div className="space-y-4">
+              {comments.map((comment) => (
+                <div
+                  key={comment.id}
+                  className="border rounded-lg p-4 bg-gray-50"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="font-medium text-gray-800">{comment.name}</p>
+                    <span className="text-xs text-gray-400">
+                      {comment.email}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600 whitespace-pre-line">
+                    {comment.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </article>
     </div>
