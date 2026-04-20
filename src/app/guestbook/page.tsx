@@ -1,175 +1,38 @@
-"use client";
-
-import { useState } from "react";
-import useSWR from "swr";
-import { GuestbookEntry } from "@/src/data/guestbook";
-
-const fetcher = async (url: string) => {
-  const res = await fetch(url);
-
-  if (!res.ok) {
-    throw new Error("Lỗi khi tải dữ liệu");
-  }
-
-  return res.json();
-};
-
+import { guestbookEntries } from "@/src/data/guestbook";
+import GuestbookForm from "@/src/components/guestbook-form";
+import DeleteButton from "@/src/components/delete-button";
 export default function GuestbookPage() {
-  const {
-    data: entries = [],
-    error,
-    isLoading,
-    mutate,
-  } = useSWR<GuestbookEntry[]>("/api/guestbook", fetcher);
-
-  // State cho form
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-
-  // Gửi lời nhắn
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-
-    if (!name.trim() || !message.trim()) return;
-
-    setSubmitting(true);
-
-    try {
-      const res = await fetch("/api/guestbook", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: name.trim(),
-          message: message.trim(),
-        }),
-      });
-
-      if (!res.ok) throw new Error("Lỗi khi gửi lời nhắn");
-
-      setName("");
-      setMessage("");
-
-      await mutate();
-    } catch (err) {
-      alert("Không thể gửi lời nhắn. Vui lòng thử lại.");
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
-  // Xóa lời nhắn
-  async function handleDelete(id: string) {
-    if (!confirm("Bạn có chắc muốn xóa lời nhắn này?")) return;
-
-    try {
-      const res = await fetch(`/api/guestbook/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) throw new Error("Lỗi khi xóa");
-
-      await mutate();
-    } catch (err) {
-      alert("Không thể xóa lời nhắn. Vui lòng thử lại.");
-    }
-  }
-
+  const entries = guestbookEntries;
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
       <h1 className="text-3xl font-bold mb-2">Sổ lưu bút</h1>
       <p className="text-gray-500 mb-8">Hãy để lại lời nhắn cho tôi nhé!</p>
-
-      {/* Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="bg-gray-50 rounded-lg p-6 mb-8 space-y-4"
-      >
-        <div>
-          <label className="block text-sm font-medium mb-1">Tên của bạn</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Nhập tên của bạn"
-            required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Lời nhắn</label>
-          <textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Viết lời nhắn của bạn..."
-            required
-            rows={3}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-          />
-        </div>
-
-        <button
-          type="submit"
-          disabled={submitting || !name.trim() || !message.trim()}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
-        >
-          {submitting ? "Đang gửi..." : "Gửi lời nhắn"}
-        </button>
-      </form>
-
-      {/* Loading */}
-      {isLoading && (
-        <div className="text-center py-8 text-gray-500">
-          Đang tải sổ lưu bút...
-        </div>
-      )}
-
-      {/* Error */}
-      {error && (
-        <div className="text-center py-8 text-red-500">
-          Không thể tải sổ lưu bút. Vui lòng thử lại.
-        </div>
-      )}
-
-      {/* Danh sách */}
-      {!isLoading && !error && (
-        <div className="space-y-4">
-          <p className="text-sm text-gray-400">{entries.length} lời nhắn</p>
-
-          {entries.map((entry) => (
-            <div
-              key={entry.id}
-              className="border rounded-lg p-4 hover:shadow-sm transition"
-            >
-              <div className="flex justify-between mb-2">
-                <span className="font-semibold">{entry.name}</span>
-
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-gray-400">
-                    {new Date(entry.createdAt).toLocaleDateString("vi-VN")}
-                  </span>
-
-                  <button
-                    onClick={() => handleDelete(entry.id)}
-                    className="text-xs text-red-400 hover:text-red-600"
-                  >
-                    Xóa
-                  </button>
-                </div>
+      <GuestbookForm />
+      <div className="space-y-4">
+        <p className="text-sm text-gray-400">{entries.length} lời nhắn</p>
+        {entries.map((entry) => (
+          <div
+            key={entry.id}
+            className="border rounded-lg p-4 hover:shadow-sm transition-shadow"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-semibold text-gray-800">{entry.name}</span>
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-gray-400">
+                  {new Date(entry.createdAt).toLocaleDateString("vi-VN")}
+                </span>
+                <DeleteButton id={entry.id} />
               </div>
-
-              <p className="text-gray-600">{entry.message}</p>
             </div>
-          ))}
-
-          {entries.length === 0 && (
-            <p className="text-center text-gray-400 py-8">
-              Chưa có lời nhắn nào. Hãy là người đầu tiên!
-            </p>
-          )}
-        </div>
-      )}
+            <p className="text-gray-600">{entry.message}</p>
+          </div>
+        ))}
+        {entries.length === 0 && (
+          <p className="text-center text-gray-400 py-8">
+            Chưa có lời nhắn nào. Hãy là người đầu tiên!
+          </p>
+        )}
+      </div>
     </div>
   );
 }
