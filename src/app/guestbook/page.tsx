@@ -3,6 +3,7 @@ import GuestbookForm from "@/src/components/guestbook-form";
 import DeleteButton from "@/src/components/delete-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 export default function GuestbookPage() {
   const entries = guestbookEntries;
   return (
@@ -17,9 +18,16 @@ export default function GuestbookPage() {
           <Card key={entry.id}>
             <CardContent className="pt-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="font-semibold text-gray-800">
-                  {entry.name}
-                </span>
+                <div className="flex items-center gap-3">
+                  <Avatar className="h-9 w-9">
+                    <AvatarFallback className="text-xs font-semibold">
+                      {entry.name.trim().charAt(0).toUpperCase() || "?"}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="font-semibold text-gray-800">
+                    {entry.name}
+                  </span>
+                </div>
                 <div className="flex items-center gap-3">
                   <span className="text-xs text-gray-400">
                     {new Date(entry.createdAt).toLocaleDateString("vi-VN")}

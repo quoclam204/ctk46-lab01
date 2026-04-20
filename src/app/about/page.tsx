@@ -1,7 +1,14 @@
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+
 export default function AboutPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-6">Giới thiệu</h1>
+      <div className="flex items-center gap-4 mb-6">
+        <Avatar className="h-14 w-14">
+          <AvatarFallback className="text-lg font-semibold">L</AvatarFallback>
+        </Avatar>
+        <h1 className="text-3xl font-bold">Giới thiệu</h1>
+      </div>
 
       <div className="space-y-4 text-gray-700">
         <p>

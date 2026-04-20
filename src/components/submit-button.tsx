@@ -2,6 +2,7 @@
 
 import { useFormStatus } from "react-dom";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { Button } from "@/components/ui/button";
 
 interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   pendingLabel?: ReactNode;
@@ -18,7 +19,7 @@ export default function SubmitButton({
   const isDisabled = pending || disabled;
 
   return (
-    <button
+    <Button
       {...props}
       type={props.type ?? "submit"}
       className={className}
@@ -26,6 +27,6 @@ export default function SubmitButton({
       aria-disabled={isDisabled}
     >
       {pending ? (pendingLabel ?? children) : children}
-    </button>
+    </Button>
   );
 }
