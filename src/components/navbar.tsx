@@ -5,6 +5,7 @@ const navLinks = [
   { href: "/about", label: "Giới thiệu" },
   { href: "/blog", label: "Blog" },
   { href: "/projects", label: "Dự án" },
+  { href: "/pokemon", label: "Pokemon" },
   { href: "/guestbook", label: "Lưu bút" },
   { href: "/contact", label: "Liên hệ" },
 ];

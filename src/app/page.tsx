@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Counter from "@/src/components/counter";
-import CopyButton from "@/src/components/copy-button";
+import CopyButtonWithTooltip from "@/src/components/copy-button-with-tooltip";
 import {
   Accordion,
   AccordionContent,
@@ -8,13 +8,33 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
-export default function HomePage() {
+type Pokemon = {
+  name: string;
+  height: number;
+  weight: number;
+  sprites: {
+    front_default: string | null;
+  };
+  types: Array<{
+    type: {
+      name: string;
+    };
+  }>;
+};
+
+export default async function HomePage() {
+  const response = await fetch("https://pokeapi.co/api/v2/pokemon/ditto", {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch Ditto data");
+  }
+
+  const ditto = (await response.json()) as Pokemon;
+  const heightMeters = ditto.height / 10;
+  const weightKg = ditto.weight / 10;
   return (
     <div className="max-w-5xl mx-auto px-4 py-16">
       {/* HERO SECTION */}
@@ -53,6 +73,35 @@ export default function HomePage() {
           >
             Liên hệ
           </Link>
+        </div>
+      </div>
+
+      {/* DITTO SECTION */}
+      <div className="mb-16">
+        <h2 className="text-2xl font-bold text-center mb-8">
+          Thông tin Pokemon: Ditto
+        </h2>
+        <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col sm:flex-row items-center gap-6">
+          <div className="w-24 h-24 rounded-full bg-gray-50 flex items-center justify-center">
+            {ditto.sprites.front_default ? (
+              <img
+                src={ditto.sprites.front_default}
+                alt={`Pokemon ${ditto.name}`}
+                className="w-20 h-20"
+              />
+            ) : (
+              <span className="text-sm text-gray-500">No image</span>
+            )}
+          </div>
+          <div className="text-center sm:text-left">
+            <p className="text-lg font-semibold capitalize">{ditto.name}</p>
+            <p className="text-sm text-gray-600">
+              Cao: {heightMeters} m • Nặng: {weightKg} kg
+            </p>
+            <p className="text-sm text-gray-600">
+              Hệ: {ditto.types.map((item) => item.type.name).join(", ")}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -140,12 +189,10 @@ export default function HomePage() {
 
       <div className="mt-8 flex flex-col items-center gap-3">
         <p className="text-sm text-gray-500">Copy email liên hệ</p>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <CopyButton text="nguyenlequoc@gmail.com" />
-          </TooltipTrigger>
-          <TooltipContent>Nhấn để sao chép email</TooltipContent>
-        </Tooltip>
+        <CopyButtonWithTooltip
+          text="nguyenlequoc@gmail.com"
+          tooltipText="Nhấn để sao chép email"
+        />
       </div>
 
       <div className="mt-12 flex justify-center">
